@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+ul 
+{
+    list-style-type: none;
+}
+
+.evenRow
+{
+    background: #808080;
+    padding: 1em;
+}
+
+.oddRow
+{
+    padding: 1em;
+}
