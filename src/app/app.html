@@ -1,22 +1,28 @@
 <h1>{{title()}}</h1>
 <h2>Movies List</h2>
 <ul>
-  @for (movie of movies(); track movie; let isEven = $even;) {
+  @for (movie of movieService.movies(); track movie; let i = $index; let isEven = $even;) {
     <li [class.evenRow]="isEven" [class.oddRow]="!isEven">
-       <button (click)="addToFavourites(movie)">Favourite</button>
-       {{movie}}
-    </li> }
+       <button
+       [disabled]="movieService.favourites().includes(movie.title)" 
+       (click)="movieService.addFav(movie.title)">
+       {{movieService.favourites().includes(movie.title) ? 'Added' : 'Favourite'}}</button>
+       {{movie.title}} ({{movie.year}} - {{movie.director}})
+    </li> 
+    } @empty {
+      <li>No movies found!</li>
+    }
 </ul>
 
 <h2>Favourites</h2>
 <ul>
-  @if (favourites().length > 0) {
-        <li>{{favourites().length}} movie(s) chosen</li>
+  @if (movieService.favourites().length > 0) {
+        <li>{{movieService.favourites().length}} movie(s) chosen</li>
       }
 
-  @for (movie of favourites(); track movie; let isEven = $even;) {
+  @for (movie of movieService.favourites(); track movie; let isEven = $even;) {
     <li [class.evenRow]="isEven" [class.oddRow]="!isEven">
-      <button (click)="deleteFromFavourites(movie)">Delete</button>
+      <button (click)="movieService.delFav($index)">Delete</button>
       {{movie}}
       </li>}
       @empty {
